@@ -1,0 +1,23 @@
+# Adopted security, provenance and measurement wording
+Version 1.1 | 9 September 2026
+Adopted by the assistant under researcher delegation. This is not a new supervisor signature, public licence or privacy certificate.
+
+## Benchmark description for the thesis
+The study uses a researcher-supplied synthetic benchmark of eleven linked EHR access-log tables, organised into three simulated federated clients. The existing source snapshot, schema and partition identifiers are retained. Public repository metadata were unavailable at the decision date; public availability, licence terms and authority to redistribute were not verified from the supplied records. The dataset is not represented as records collected from real hospitals or as a verified derivative of the earlier two-file Kaggle dataset.
+
+No publisher, DOI, publication/access date or public licence is invented. The internal profile `2.0.0-full-reference_seed_01` identifies the source snapshot; it is not a Kaggle version or generation date. The original generator/configuration are not supplied. Processing can be reproduced from the preserved files conditional on access; regeneration from the original generator and unrestricted public reproducibility have not been demonstrated. The attached source manifest is preserved verbatim, not rebuilt from test rows in this task. [S01-S04]
+
+The previously reported approval to use this benchmark is retained. Lack of publication metadata does not block preparing the local experiment code, but does not prove compliance with an exclusively-public-data requirement. This addendum does not infer a new supervisor waiver, authorise a public upload, grant rights or select a licence. Do not publish raw data under an assumed licence. This is a reporting constraint, not a claim of illegality.
+
+## Security statement
+Configuration C implements Flower SecAgg+ using local build 1.22.0+mai.prg7570.1 and the pinned, attributed mask-generator backport from commit e87804ad00c46bff6dc3f058b73de81529e50bc0. The intended protected asset is an individual client's post-local-training parameter vector at the prescribed aggregation-message interface. Historical pilot evidence records protocol completion, intended masked-message boundaries and rejection of inconsistent software identifiers.
+
+The bounded claim assumes an honest-but-curious server following cohort and key-distribution rules, honest non-colluding clients, trusted endpoints/operating system and no hostile network adversary. It is an implementation and empirical-evaluation claim, not a new cryptographic protocol, proof or independent certification. All three clients remain required for each accepted stage despite reconstruction threshold 2. No additional server-side plaintext update or individual output-update fingerprint channel is permitted in C. [S15/S16 and historical host reports]
+
+TLS remains excluded under the previously reported scope decision: no transport-confidentiality or hostile-network-integrity claim is made. Loopback is containment, not TLS or endpoint authentication. The processes share a trusted host and are not independent organisations with enforced mutual isolation. Fixed counts, global models and routine scalar metrics remain visible; preprocessing statistics were combined in plaintext. No differential privacy, protection against all inference, poisoning/backdoor resistance, malicious-server or collusion protection, or clinical validity is claimed. Do not describe the system as fully privacy-preserving. No change to the PRG or library is made by this addendum.
+
+## Measurement statement
+Communication is application record-content volume counted once in both directions at the client boundary; server counters cross-check, not add a second copy. It is not full network traffic. Do not introduce a packet-capture task merely to re-label the existing result. Time is instrumented fit/workflow duration, with evaluation/startup separate, not pure cryptographic time. RSS sums may double-count shared pages and are not unique physical memory. Inference is a prepared-input forward pass plus session score, not a complete raw-event-to-alert delay. Preserve these labels in the thesis, tables and abstracts. [S20/S22]
+
+## What remains before main launch
+Build and fixture-test the executable main A/B/C runner and evaluator; generate the main initial states and train-only schedules; pin the executable/configuration hashes. Training and test authorisations remain separate. The current decisions close the P1-P5 selection task, not the missing provenance facts or the unbuilt execution release. No repeated confirmation form is requested for the same decisions.

@@ -1,0 +1,2 @@
+# Install from https://download.pytorch.org/whl/cpu with --no-deps.
+torch==2.10.0+cpu

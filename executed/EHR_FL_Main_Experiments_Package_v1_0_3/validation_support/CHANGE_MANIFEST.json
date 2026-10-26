@@ -1,0 +1,41 @@
+{
+  "stage": "ISOLATED_PRG_BUILD_AND_PUBLIC_PROTOCOL_VALIDATION_ONLY",
+  "scope_approval": {
+    "status": "reported_by_user_in_current_conversation",
+    "independent_signed_approval_document_verified": false,
+    "approval_is_not_security_certification": true
+  },
+  "stock_version": "1.22.0",
+  "candidate_version": "1.22.0+mai.prg7570.1",
+  "candidate_origin": "saurabhvmagdum/flower PR 7570",
+  "candidate_commit": "e87804ad00c46bff6dc3f058b73de81529e50bc0",
+  "pr_state_rechecked": "open; merged=false",
+  "official_wheel_name": "flwr-1.22.0-py3-none-any.whl",
+  "official_wheel_sha256": "c87e0d6befdc51647833c30719bbe19de4ab5e58ab34586c85cb40815b105160",
+  "official_wheel_hash_source": "https://pypi.org/project/flwr/1.22.0/#files",
+  "helper_path": "flwr/common/secure_aggregation/secaggplus_utils.py",
+  "sources": {
+    "UNMERGED_PR_7570_e87804ad_secaggplus_utils.py": "f644ca905b17a83f9c82c5115db5d64bfa63a97abad24ca1a847141ecc05ac67",
+    "backport_secaggplus_utils.py": "62935b91cf10f41f2036f8ccdbe65f257de86d4ada65cff7ff9fe254927c361c",
+    "flower_v1_22_0_secaggplus_utils.py": "13fc54f99778e5d68ed5e9bb33a0b6c0e8c55d5b497feead97b7e9fbbc6ad70a"
+  },
+  "old_function_sha256": "19ee2545ed58c0174c0b1a56f4211d635347156163ae76a711613badad4b25e9",
+  "new_function_sha256": "2513f6c64f83c4ca6cd69800a517426b701e3e41e8e349f001542b1a7144c230",
+  "secagg_parameters": {
+    "num_shares": 3,
+    "reconstruction_threshold": 2,
+    "max_weight": 4096.0,
+    "clipping_range": 8.0,
+    "quantization_range": 4194304,
+    "modulus_range": 2147483648,
+    "timeout": 600.0
+  },
+  "not_authorised_by_this_package": [
+    "privacy certification",
+    "main experiment freeze",
+    "held-out evaluation",
+    "automatic changes to existing baseline environment",
+    "benchmark training",
+    "new cryptographic design"
+  ]
+}

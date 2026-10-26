@@ -1,0 +1,13 @@
+session_id,event_id,sequence_position,timestamp_utc,action,event_category,department,role,resource_type,source_application,device_type,network_zone,location_type,purpose_of_use,relationship_type,outcome,ward_or_location,assigned_patient,break_glass,on_shift
+SAMPLE-BELOW-001,SAMPLE-BELOW-E000,0,2026-10-26T01:00:00+00:00,R,access,internal_medicine,nurse,Observation,ehr_core,workstation,internal_clinical,ward,treatment,assignment,success,internal_medicine,1,0,1
+SAMPLE-BELOW-001,SAMPLE-BELOW-E001,1,2026-10-26T01:00:45+00:00,R,access,internal_medicine,nurse,Observation,ehr_core,workstation,internal_clinical,ward,treatment,assignment,success,internal_medicine,1,0,1
+SAMPLE-BELOW-001,SAMPLE-BELOW-E002,2,2026-10-26T01:01:30+00:00,R,access,internal_medicine,nurse,Observation,ehr_core,workstation,internal_clinical,ward,treatment,assignment,success,internal_medicine,1,0,1
+SAMPLE-BELOW-001,SAMPLE-BELOW-E003,3,2026-10-26T01:02:15+00:00,R,access,internal_medicine,nurse,Observation,ehr_core,workstation,internal_clinical,ward,treatment,assignment,success,internal_medicine,1,0,1
+SAMPLE-BELOW-001,SAMPLE-BELOW-E004,4,2026-10-26T01:03:00+00:00,R,access,internal_medicine,nurse,Observation,ehr_core,workstation,internal_clinical,ward,treatment,assignment,success,internal_medicine,1,0,1
+SAMPLE-BELOW-001,SAMPLE-BELOW-E005,5,2026-10-26T01:03:45+00:00,R,access,internal_medicine,nurse,Observation,ehr_core,workstation,internal_clinical,ward,treatment,assignment,success,internal_medicine,1,0,1
+SAMPLE-BELOW-001,SAMPLE-BELOW-E006,6,2026-10-26T01:04:30+00:00,R,access,internal_medicine,nurse,Observation,ehr_core,workstation,internal_clinical,ward,treatment,assignment,success,internal_medicine,1,0,1
+SAMPLE-BELOW-001,SAMPLE-BELOW-E007,7,2026-10-26T01:05:15+00:00,R,access,internal_medicine,nurse,Observation,ehr_core,workstation,internal_clinical,ward,treatment,assignment,success,internal_medicine,1,0,1
+SAMPLE-BELOW-001,SAMPLE-BELOW-E008,8,2026-10-26T01:06:00+00:00,R,access,internal_medicine,nurse,Observation,ehr_core,workstation,internal_clinical,ward,treatment,assignment,success,internal_medicine,1,0,1
+SAMPLE-BELOW-001,SAMPLE-BELOW-E009,9,2026-10-26T01:06:45+00:00,R,access,internal_medicine,nurse,Observation,ehr_core,workstation,internal_clinical,ward,treatment,assignment,success,internal_medicine,1,0,1
+SAMPLE-BELOW-001,SAMPLE-BELOW-E010,10,2026-10-26T01:07:30+00:00,R,access,internal_medicine,nurse,Observation,ehr_core,workstation,internal_clinical,ward,treatment,assignment,success,internal_medicine,1,0,1
+SAMPLE-BELOW-001,SAMPLE-BELOW-E011,11,2026-10-26T01:08:15+00:00,R,access,internal_medicine,nurse,Observation,ehr_core,workstation,internal_clinical,ward,treatment,assignment,success,internal_medicine,1,0,1

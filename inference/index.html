@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Session Check</title>
+  <style>
+    :root{--ink:#1e293b;--muted:#64748b;--line:#e2e8f0;--accent:#087f76;--error:#b42318}
+    *{box-sizing:border-box}body{margin:0;background:#f6f8fa;color:var(--ink);font:15px/1.6 "Segoe UI",Arial,sans-serif}
+    main{width:min(860px,calc(100% - 40px));margin:44px auto}header{margin-bottom:24px}h1{font-size:27px;font-weight:650;letter-spacing:-.6px;margin:0}header p{margin:5px 0 0;color:var(--muted)}
+    .card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:26px;margin-top:20px}h2{font-size:18px;margin:0 0 18px;font-weight:650}h3{font-size:15px;margin:0 0 12px}label{font-weight:600;font-size:13px;display:block;margin-bottom:6px}
+    .inputs{display:grid;grid-template-columns:1fr 160px;gap:18px;align-items:start}input,select,textarea,button{font:inherit}input[type=file],select{border:1px solid #cbd5e1;border-radius:7px;padding:10px;background:#fff;width:100%;min-height:46px;color:var(--ink)}input[type=file]{font-size:13px}input::file-selector-button{border:0;border-right:1px solid var(--line);background:#f1f5f9;color:var(--ink);padding:3px 12px 3px 0;margin-right:12px;cursor:pointer}button{cursor:pointer;border:1px solid #cbd5e1;border-radius:7px;background:#fff;padding:9px 17px;color:var(--ink);font-weight:600;font-size:14px}button.primary{background:var(--accent);color:#fff;border-color:var(--accent)}button:disabled{opacity:.45;cursor:not-allowed}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid #73c9bd;outline-offset:3px}a{color:var(--accent);text-underline-offset:3px}.hint{font-size:12px;color:var(--muted);margin:9px 0 0}.actions{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin-top:20px}.status{margin:12px 0 0;font-size:13px;color:var(--muted);min-height:21px}.error{background:#fff1f0;color:var(--error);padding:12px 14px;border:1px solid #f5ccc7;border-radius:7px;margin:14px 0 0;white-space:pre-wrap;overflow-wrap:anywhere}[hidden]{display:none!important}
+    .result-head{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:17px}.result-head h2{margin:0}.badge{font-size:13px;font-weight:650;padding:5px 11px;border-radius:20px;background:#edf3f8;color:#40566d}.badge.alert{background:#fff2d6;color:#946000}.metrics{display:grid;grid-template-columns:1fr 1fr;gap:14px}.metric{background:#f8fafc;border:1px solid #edf1f5;border-radius:8px;padding:14px 17px}.metric span{font-size:12px;color:var(--muted);display:block}.metric strong{font-size:26px;font-weight:600;letter-spacing:-.5px;font-variant-numeric:tabular-nums;display:block;margin-top:3px}.meta{font-size:13px;color:var(--muted);margin:14px 0 0;overflow-wrap:anywhere}.meta p{margin:4px 0}.meta b{font-weight:500;color:var(--ink)}details{border-top:1px solid var(--line);margin-top:20px;padding-top:16px}summary{cursor:pointer;font-weight:600;font-size:13px}.event-toolbar{display:flex;align-items:center;justify-content:space-between;gap:15px;margin:16px 0 8px}.event-toolbar select{width:auto;min-height:36px;font-size:12px;padding:6px 10px}.table-wrap{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:12px}th,td{text-align:left;border-bottom:1px solid #edf1f5;padding:9px 10px;vertical-align:top}th{font-weight:600;color:var(--muted);white-space:nowrap}td{overflow-wrap:anywhere;max-width:230px}.number{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}.review{border-top:1px solid var(--line);margin-top:23px;padding-top:20px}.review-grid{display:grid;grid-template-columns:220px 1fr;gap:15px}.review textarea{width:100%;height:84px;border:1px solid #cbd5e1;border-radius:7px;padding:9px 11px;resize:vertical}.saved{color:#087f50}.review .actions{margin-top:12px}.footer{font-size:12px;color:var(--muted);margin:20px 0;text-align:center}
+    @media(max-width:600px){main{width:calc(100% - 24px);margin:25px auto}.card{padding:19px}.inputs,.review-grid{grid-template-columns:1fr}.result-head{align-items:flex-start}.metric strong{font-size:23px}.event-toolbar{align-items:flex-start;flex-direction:column}}
+  </style>
+</head>
+<body>
+<main>
+  <header><h1>Session Check</h1><p>Upload a session and check its anomaly score.</p></header>
+  <section class="card" aria-labelledby="input-title">
+    <h2 id="input-title">New session</h2>
+    <div class="inputs">
+      <div><label for="file">CSV file</label><input id="file" type="file" accept=".csv,text/csv" disabled><p class="hint">One complete session · up to 512 events · 512 KB</p></div>
+      <div><label for="client">Client</label><select id="client" disabled><option value="C1">C1</option><option value="C2">C2</option><option value="C3">C3</option></select></div>
+    </div>
+    <div class="actions"><button id="run" class="primary" type="button" disabled>Run inference</button><button id="clear" type="button" disabled>Clear</button><a href="/input-template.csv" download="input_template.csv">Download template</a></div>
+    <p id="status" class="status" role="status" aria-live="polite">Connecting…</p>
+    <p id="error" class="error" role="alert" hidden></p>
+    <button id="reconnect" type="button" style="margin-top:12px" hidden>Reconnect</button>
+  </section>
+  <section id="result" class="card" aria-labelledby="result-title" hidden>
+    <div class="result-head"><h2 id="result-title">Result</h2><span id="decision" class="badge"></span></div>
+    <div class="metrics"><div class="metric"><span>Anomaly score</span><strong id="score-value"></strong></div><div class="metric"><span>Client threshold</span><strong id="threshold-value"></strong></div></div>
+    <div class="meta"><p id="session-meta"></p><p id="time-meta"></p><p id="coverage-note" hidden></p></div>
+    <p class="hint">The score is reconstruction error, not a threat probability.</p>
+    <details id="event-details"><summary>Event contributions</summary><div class="event-toolbar"><p class="hint" style="margin:0">Contribution to the score, not confirmed harmful activity.</p><select id="sort" aria-label="Event order"><option value="contribution">Highest contribution</option><option value="sequence">Sequence order</option></select></div><div class="table-wrap"><table><thead><tr><th>Position</th><th>Event</th><th>Time (UTC)</th><th>Department / resource</th><th class="number">Score share</th></tr></thead><tbody id="events"></tbody></table></div></details>
+    <div class="review"><h3>Review</h3><div class="review-grid"><div><label for="review-decision">Decision</label><select id="review-decision"><option value="needs_context">Needs more context</option><option value="legitimate">Legitimate activity</option><option value="escalate">Escalate for investigation</option></select></div><div><label for="review-note">Note (optional)</label><textarea id="review-note" maxlength="4000" placeholder="Add a review note"></textarea></div></div><div class="actions"><button id="save-review" type="button" disabled>Save review</button><button id="download" type="button" disabled>Download result</button></div><p id="review-status" class="status" role="status" aria-live="polite">No review saved.</p></div>
+  </section>
+  <p class="footer">Research demo. Uploads are processed in memory; use synthetic or de-identified data.</p>
+</main>
+<script>
+'use strict';
+const $ = id => document.getElementById(id);
+let config = null, csvText = '', lastResult = null, busy = false, revision = 0, savedReview = null;
+function text(id,value){ $(id).textContent=String(value); }
+function message(value){ text('status',value); }
+function clearError(){ text('error',''); $('error').hidden=true; }
+function showError(value){ text('error',value); $('error').hidden=false; }
+function reviewChanged(){ return !savedReview || savedReview.decision!==$('review-decision').value || savedReview.note!==$('review-note').value; }
+function controls(){
+  const locked=busy||!config;
+  $('file').disabled=locked; $('client').disabled=locked; $('clear').disabled=busy;
+  $('run').disabled=locked||!csvText.trim(); $('reconnect').disabled=busy;
+  $('review-decision').disabled=busy; $('review-note').disabled=busy;
+  $('sort').disabled=busy; $('download').disabled=busy||!lastResult;
+  $('save-review').disabled=busy||!config||!lastResult||!reviewChanged();
+}
+function setBusy(value){ busy=value; controls(); }
+function resetResult(){ lastResult=null; savedReview=null; $('result').hidden=true; $('event-details').open=false; $('sort').value='contribution'; $('review-decision').value='needs_context'; $('review-note').value=''; text('review-status','No review saved.'); $('review-status').classList.remove('saved'); $('events').replaceChildren(); controls(); }
+function clearInput(){ ++revision; csvText=''; $('file').value=''; if(config) $('client').value=config.clients[0]; resetResult(); clearError(); message('Choose a CSV file to begin.'); }
+function format(value){ return Number.isFinite(value)?Number(value).toPrecision(7):'—'; }
+function utc(value){ const date=new Date(value); return Number.isNaN(date.valueOf())?String(value):date.toISOString().replace('T',' ').replace(/\.000Z$/,' UTC').replace(/Z$/,' UTC'); }
+async function api(path,body){
+  const options={cache:'no-store'};
+  if(body!==undefined)Object.assign(options,{method:'POST',headers:{'Content-Type':'application/json','X-Demo-Token':config.token},body:JSON.stringify(body)});
+  let response;
+  try{response=await fetch(path,options);}catch{const e=new Error('Cannot connect to the server. Select Reconnect and try again.');e.connection=true;throw e;}
+  let data;
+  try{data=await response.json();}catch{throw new Error('The server returned an unreadable response. Please try again.');}
+  if(!response.ok||data.error){const e=new Error(data.error||'The request could not be completed.');e.connection=[403,502,503,504].includes(response.status);throw e;}
+  return data;
+}
+function handleError(error){showError(error.message||'The request could not be completed.');if(error.connection){config=null;$('reconnect').hidden=false;}}
+function renderEvents(){
+  if(!lastResult)return;
+  const rows=[...lastResult.events].sort($('sort').value==='sequence'?(a,b)=>a.position-b.position:(a,b)=>b.score_contribution-a.score_contribution||a.position-b.position);
+  const fragment=document.createDocumentFragment();
+  for(const event of rows){const row=document.createElement('tr');for(const [value,cls] of [[event.position,''],[event.event_id,''],[utc(event.timestamp_utc),''],[event.department+' / '+event.resource_type,''],[Number(event.contribution_percent).toFixed(2)+'%','number']]){const cell=document.createElement('td');cell.textContent=String(value);if(cls)cell.className=cls;row.append(cell);}fragment.append(row);}
+  $('events').replaceChildren(fragment);
+}
+function renderResult(result){
+  lastResult=result; savedReview=null;
+  text('decision',result.alert?'Review recommended':'Below threshold');$('decision').classList.toggle('alert',Boolean(result.alert));
+  text('score-value',format(result.score));$('score-value').title=String(result.score);
+  text('threshold-value',format(result.threshold));$('threshold-value').title=String(result.threshold);
+  text('session-meta',result.session_id+' · '+result.client+' · '+result.event_count+' events');
+  text('time-meta',utc(result.window.start)+' → '+utc(result.window.end));
+  const coverage=result.coverage;const excluded=coverage.unknown_targets+coverage.missing_targets;
+  $('coverage-note').hidden=excluded===0;
+  if(excluded)text('coverage-note',excluded+' unknown or missing categorical values were excluded from the reconstruction targets.');
+  $('result').hidden=false;renderEvents();
+}
+$('file').addEventListener('change',async()=>{
+  const request=++revision; const file=$('file').files[0];csvText='';resetResult();clearError();
+  if(!file){message('Choose a CSV file to begin.');controls();return;}
+  if(!/\.csv$/i.test(file.name)){showError('Choose a .csv file.');$('file').value='';message('No file loaded.');controls();return;}
+  if(file.size>512*1024){showError('The file is too large. Use one session, up to 512 KB.');$('file').value='';message('No file loaded.');controls();return;}
+  setBusy(true);message('Reading file…');
+  try{const buffer=await file.arrayBuffer();const value=new TextDecoder('utf-8',{fatal:true}).decode(buffer);if(request!==revision)return;if(!value.trim())throw new Error('The file is empty. Choose a CSV containing one complete session.');csvText=value;message(file.name+' is ready.');}
+  catch(error){if(request===revision){csvText='';$('file').value='';showError(error instanceof TypeError?'The file must use UTF-8 text encoding.':error.message);message('No file loaded.');}}
+  finally{if(request===revision)setBusy(false);}
+});
+$('client').addEventListener('change',()=>{++revision;resetResult();clearError();message(csvText.trim()?'Client changed. Run inference again.':'Choose a CSV file to begin.');});
+$('clear').addEventListener('click',()=>{if(!busy)clearInput();});
+$('run').addEventListener('click',async()=>{
+  if(busy||!config||!csvText.trim())return;
+  const request=revision;resetResult();clearError();setBusy(true);text('run','Running…');message('Processing session…');
+  try{const result=await api('/api/score',{csv:csvText,client:$('client').value});if(request!==revision)return;renderResult(result);message('Inference complete.');}
+  catch(error){if(request===revision){handleError(error);message('Inference was not completed.');}}
+  finally{text('run','Run inference');setBusy(false);}
+});
+$('sort').addEventListener('change',renderEvents);
+for(const id of ['review-decision','review-note'])$(id).addEventListener(id==='review-note'?'input':'change',()=>{controls();if(savedReview&&reviewChanged()){text('review-status','Unsaved changes.');$('review-status').classList.remove('saved');}else if(savedReview){text('review-status','Review saved.');$('review-status').classList.add('saved');}});
+$('save-review').addEventListener('click',async()=>{
+  if(busy||!lastResult||!config||!reviewChanged())return;
+  const result=lastResult, request=revision, decision=$('review-decision').value, note=$('review-note').value;
+  clearError();setBusy(true);text('save-review','Saving…');text('review-status','Saving review…');
+  try{const review=await api('/api/review',{run_id:result.run_id,decision,note});if(review.saved!==true||review.run_id!==result.run_id)throw new Error('The server did not confirm this review.');if(request!==revision||lastResult!==result)return;result.human_review={...review};savedReview={decision,note};text('review-status','Review saved.');$('review-status').classList.add('saved');}
+  catch(error){handleError(error);text('review-status','Review was not saved.');$('review-status').classList.remove('saved');}
+  finally{text('save-review','Save review');setBusy(false);}
+});
+$('download').addEventListener('click',()=>{
+  if(busy||!lastResult)return;
+  const blob=new Blob([JSON.stringify(lastResult,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');
+  a.href=url;a.download='session-'+String(lastResult.run_id).replace(/[^A-Za-z0-9_-]/g,'_')+'.json';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+});
+async function connect(){
+  if(busy)return;clearError();setBusy(true);message('Connecting…');
+  try{const next=await api('/api/config');if(!next.token||!Array.isArray(next.clients)||!next.clients.length)throw new Error('The server configuration is incomplete.');const previous=$('client').value;config=next;const options=next.clients.map(client=>{const option=document.createElement('option');option.value=client;option.textContent=client;return option;});$('client').replaceChildren(...options);if(next.clients.includes(previous))$('client').value=previous;$('reconnect').hidden=true;resetResult();message(csvText.trim()?'Connected. Your file is ready.':'Choose a CSV file to begin.');}
+  catch(error){config=null;handleError(error);$('reconnect').hidden=false;message('Server unavailable.');}
+  finally{setBusy(false);}
+}
+$('reconnect').addEventListener('click',connect);
+connect();
+</script>
+</body>
+</html>

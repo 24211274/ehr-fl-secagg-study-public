@@ -1,0 +1,13 @@
+{
+  "scope": "Publication checks of the full controlled archive and public synthetic arithmetic fixtures",
+  "controlled_archive_files": 402,
+  "original_scientific_source_files_verified": 215,
+  "selected_models_covered": 30,
+  "release_packages": 4,
+  "restored_manifested_payload_files": 531,
+  "stored_score_scalar_checks": 394623,
+  "stored_score_failures": 0,
+  "inference_synthetic_checks_passed": 9,
+  "training_performed_during_publication": false,
+  "current_public_file_integrity": "Run tools/verify_public_archive.py against PUBLIC_FILES_SHA256.json"
+}
